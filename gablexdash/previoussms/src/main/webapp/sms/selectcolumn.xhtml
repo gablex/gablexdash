@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+            <h:form id="form">   
+               
+
+             
+                <h:panelGrid> 
+                    <div >
+  <div style="justify-content: flex-start; display: flex;"><p >  Sms Balance : #{sessionmanager.remainigsms} </p> 
+            </div>
+
+                        <p:dataTable id="cars" var="car"  value="#{Exceluploader.tableData}"  rows="10"  
+                                     paginator="true" resizableColumns="true" 
+                                     paginatorPosition="bottom" 
+ paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+ rowsPerPageTemplate="15,20,35,50,100">                    
+                            <p:columns value="#{Exceluploader.columnHeaders}" var="column" columnIndexVar="colIndex" >
+                                <f:facet name="header">
+                                    <h:outputText value="#{column}" />
+                                </f:facet>
+                                <h:outputText value="#{car[colIndex]}" />
+                            </p:columns>
+                        </p:dataTable>
+
+
+
+
+                        <div>
+                            <p:outputLabel  for="frm" style="margin-left: 40%"  value="Select Excel Sheet Column  With phone Numbers"/>
+                            <p:selectOneMenu id="frm" style="margin-left: 40%"  value="#{Exceluploader.getColumnName}" required="true" requiredMessage="Upload Excel First then choose the sheet">
+                                <f:selectItem itemLabel="Select Excel Sheet Column "  noSelectionOption="true"/>
+                                <f:selectItems value="#{Exceluploader.colsArray()}" />
+
+                            </p:selectOneMenu>
+
+                <img id="progressbar" src="./images/ajax-loader.gif" style="display:none" />
+                            <p:commandButton   style="margin-left: 40%" value="Done " onclick="document.getElementById('progressbar').style.display='block'"  action="#{Exceluploader.sendexcelsms()}"   id="contactd"  ajax="false" >
+                                <p:ajax rendered="content form" />
+                            </p:commandButton > 
+
+
+                        </div>
+
+                    </div>
+                </h:panelGrid>
+
+
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html> 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<hibernate-configuration>
+  <session-factory>
+    <!-- Database connection settings -->
+    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/dbSMPPGateway?useSSL=false</property>
+    <property name="connection.username">mysql</property>
+    <property name="connection.password">mysql123</property>
+    <!-- SQL dialect -->
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql">true</property>
+    <mapping class="com.mspace1.model.users" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.graphvalue" file="" jar="" package="" resource=""/>
+  </session-factory>
+</hibernate-configuration>

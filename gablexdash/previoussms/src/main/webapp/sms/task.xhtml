@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+         xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+            <h:form id="form1">
+                      <p:growl id="msgs" showDetail="true"/>
+                      
+                               <p>Groups </p>
+                <p:selectOneMenu id="advanced" value="#{tuseraddressbook.groupsbeannumbersz}" widgetVar="selectWV2"  panelStyle="width:180px" converter="groupnumberconverter"
+                  onchange="loadPlayer3()"                      effect="fade" var="t" style="width:210px" filter="true" filterMatchMode="startsWith" >             
+                    <f:selectItem itemLabel="Select One"      itemValue=""  noSelectionOption="true"       />
+                    <f:selectItems value="#{tuseraddressbook.getallgroupnumbez()}" var="theme" itemLabel="#{theme.group_name}" itemValue="#{theme}" /> 
+                    <p:column style="width:10%" >
+                        <h:outputText value="#{t.group_name}" />
+                    </p:column> 
+                    <p:column>
+                        <h:outputText value=" #{t.group_name}" />
+                    </p:column>                                          
+                </p:selectOneMenu>     
+  <p>To: </p>
+                <p:inputTextarea  widgetVar="addresslist" id="tor" value="#{tuseraddressbook.listno}"  rows="13" cols="15" required="true" autoResize="false" requiredMessage="Enter valid phone no" >
+                    <p:keyFilter regEx="/[\d\+]/"  preventPaste="false"/>
+ </p:inputTextarea >
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  <p:selectOneMenu value="#{tuseraddressbook.groupname}" id="selectList">
+     <f:selectItem itemLabel="One Time" itemValue="1" />
+     <f:selectItem itemLabel="Recurrent" itemValue="2" />
+       <f:selectItem itemLabel="Recurrent33" itemValue="3" />
+       <p:ajax update="dependingComponent" />
+</p:selectOneMenu>                        
+
+<h:panelGroup id="dependingComponent">
+<h:panelGroup id="mmm" rendered="selectlist.value== 2" >
+     <p:outputLabel>Label:</p:outputLabel>
+        <p:calendar value="#{calendarView.date1}" pattern="MM/dd/yyyy"  />
+</h:panelGroup>
+    <h:panelGroup id="mmm2" rendered="selectlist.value== 3" >
+     <p:outputLabel>Label: </p:outputLabel>   
+        <p:calendar value="#{calendarView.date1}" pattern="MM/dd/yyyy"  />
+</h:panelGroup>
+    
+</h:panelGroup>
+            </h:form>
+ </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+            <h:form id="form"> 
+       <div style="justify-content: flex-start; display: flex;"><p >  Sms Balance : #{sessionmanager.remainigsms} </p> 
+            </div>
+               
+                       <p:growl id="messages" showDetail="true" life="120000"/>
+   <h:outputScript library="js" name="common.js" target="head" />
+   <h:panelGrid style=" margin-top: -1.3%"> 
+                        
+                    <div >
+                        <p:dataTable id="cars" var="car"  value="#{Exceluploader.tableData}"  rows="5"  
+                                     paginator="true" resizableColumns="true" 
+                                     paginatorPosition="bottom" 
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,20,35,50,100">                    
+                            <p:columns value="#{Exceluploader.columnHeaders}" var="column" columnIndexVar="colIndex" >
+                                <f:facet name="header">
+                                    <h:outputText value="#{column}" />
+                                </f:facet>
+                                <h:outputText value="#{car[colIndex]}" />
+                            </p:columns>
+                        </p:dataTable>
+    <img id="progressbar" src="./images/ajax-loader.gif" style="display:none; margin-left: 20%" />
+                    </div>
+                </h:panelGrid>
+          
+   <div class="ui-g" style="margin-top: -2%">
+       
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <br></br> 
+                        <br></br> 
+                        <br></br> 
+                        <br></br> 
+                        <br></br>                   
+                        <br></br> 
+                        <br></br> 
+
+
+                        <h:outputText value="You can now send long message with up to 560 characters.
+                                      Specify fields by using [col] tags as they appear in the sample data 
+                                      above. Eg. To specify account no field, use [col1], amount use [col2],
+                                      name use [col3]. Eg. Dear [col1], your account/policy no [col2]... " /> 
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <p> Message: </p>
+                        <h:inputHidden  id="mumLen" value='160'/>
+                        <p:inputTextarea value="#{Exceluploader.message}"  rows="13" cols="35" id="message"   onkeyup="textCounter()">
+                        <p:ajax event="keyup"  listener="#{Exceluploader.updateMessages()}"   update="dialog2,diag" />
+                        </p:inputTextarea>
+                        <br></br>
+                        <h:outputLabel for="remLen" value="Characters left:" />
+                        <h:inputText  id="remLen" value="" size="9" maxlength="8" readonly="true" /><br></br>
+                         <h:outputLabel for="remLen" value="(the character might not be the exact value if you included columns value)" />
+                    </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <br></br> 
+                        <br></br> 
+                        <br></br> 
+                        <br></br> 
+
+                        <br></br> 
+                        <br></br> 
+                        <br></br> 
+                        <br></br> 
+
+                        
+                          <h:outputLabel for="frm" value="From Address: " />
+                        <p:selectOneMenu id="frm"   value="#{Exceluploader.fromaddress}" required="true"
+                                         requiredMessage="Choose one Source address">
+                            <f:selectItem itemLabel="--Select One--"  noSelectionOption="true"/>
+                            <f:selectItems value="#{Exceluploader.lista}" />
+                        </p:selectOneMenu>
+                           <br></br> 
+                                <br></br> 
+                              <h:outputLabel for="remLen" value="Time to send:  " />
+                        <p:calendar id="datetime" value="#{Exceluploader.time}" pattern="yyyy-MM-dd HH:mm:ss" mindate="#{tuseraddressbook.todayDate}" style="font: 13px georgia;" /> 
+                        <br></br>     
+                            <br></br>    
+                        <p:commandButton  style="margin-left:25% "  value="Save Message" onclick="document.getElementById('progressbar').style.display='block'"   action="#{Exceluploader.saveMessage()}"   id="contactd"  ajax="false" >
+                        </p:commandButton >
+                                   
+                    </div>
+                </div>
+
+                <div class="ui-g" >
+                    <div class="ui-g-12 ui-md-6 ui-lg-4" >
+                        <p:fieldset style="margin-left:-15px">
+                            <p:commandButton  value="SEND PREVIEW SMS  "    id="cont6" ajax="false"  onclick="PF('mon').show();" type="button" icon="ui-icon-extlink"   />      <br></br> 
+                            <p:outputLabel> send a preview  sms to your phone </p:outputLabel>
+                            <br></br> 
+                            <br></br> 
+                            <br></br> 
+                            <br></br> 
+                              <p:dialog id="dialog2"  header="SEND PREVIEW SMS" widgetVar="mon" >
+           <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="destin1" value="TO" />
+            <h:inputText id="destin1"  value="#{Exceluploader.to}"  >
+                   <p:keyFilter regEx="/[\d\+]/" preventPaste="false"  />
+            </h:inputText>
+ 
+            <h:outputLabel for="mesg1" value="Message" />
+            <h:outputText id="mesg1" value="#{Exceluploader.msg2}"/>
+ 
+            <h:outputLabel for="frm41" value="From" />
+            <h:outputText id="frm41" value="#{Exceluploader.fromaddress}" />
+            
+             <h:outputLabel for="time1" value="Time" />
+             <h:outputText id="time1" value="#{Exceluploader.time}" />
+             <br></br> 
+             
+               <p:commandButton  style="margin-left:25% "  value="Send  Message" onclick="document.getElementById('progressbar').style.display='block'"   action="#{Exceluploader.sendpreviewMessage()}"   id="contactl"  ajax="false"    update="messages">
+                        </p:commandButton ><br></br> 
+        </h:panelGrid>
+    </p:dialog>
+                            
+                            
+                            
+                        </p:fieldset> 
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <p:fieldset style="margin-left:-15px">
+                            <p:commandButton    value="SAMPLE SMS"     id="contactd7"  ajax="false"  onclick="PF('dlg').show();" type="button" icon="ui-icon-extlink"  /> <br></br> 
+                            <p:outputLabel> view a sample  sms outlook </p:outputLabel>
+                            <br></br> 
+                            <br></br> 
+                            <br></br> 
+                            <br></br> 
+         <p:dialog id="diag" header="Sample SMs " widgetVar="dlg" >
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="destin" value="TO" />
+            <h:outputText id="destin"  value="#{Exceluploader.samplenumber}" />
+ 
+            <h:outputLabel for="mesg" value="Message" />
+            <h:outputText id="mesg" value="#{Exceluploader.msg2}"/>
+ 
+            <h:outputLabel for="frm4" value="From" />
+            <h:outputText id="frm4" value="#{Exceluploader.fromaddress}" />
+            
+             <h:outputLabel for="time" value="Time" />
+             <h:outputText id="time" value="#{Exceluploader.time}" />
+        </h:panelGrid>
+    </p:dialog>
+                        </p:fieldset>  
+                        
+                        
+                        
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                        <p:fieldset style="margin-left:-15px">
+                                 
+                            <p:commandButton    value="SEND SMS TO ALL"  onclick="document.getElementById('progressbar').style.display='block'"  action="#{Exceluploader.sendMySms()}"  id="contactd8"  ajax="false" />     <br></br> 
+                            <p:outputLabel> Send sms to all selected address </p:outputLabel>
+                            <br></br> 
+                            <br></br> 
+                            <br></br> 
+                            <br></br> 
+                            
+                            
+                              <p:dialog header="Insufficient Sms Balance " id="myDialogID" widgetVar="myDialogVar1"  modal="true">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p> Your SMS balance #{sessionmanager.remainigsms} is not enough to <br></br>
+                                send these #{Exceluploader.getallAddrsvalue().size()} SMS. <br></br>
+                                Would you like to proceed and send only #{sessionmanager.remainigsms}  SMS?  </p>
+                            <f:facet name="footer">
+                                <p:commandButton value="Cancel"  onclick="PF('dlg').hide()"  ajax="false"/> 
+                                
+                                <p:commandButton value="OK"  actionListener="#{Exceluploader.sendnewsms2()}" ajax="false"
+                                              onclick="document.getElementById('progressbar').style.display='block'"    />
+                            </f:facet>  
+                        </h:panelGrid>
+                    </p:dialog>
+                        </p:fieldset> 
+                    </div>
+                </div>
+
+
+
+
+
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html> 

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>GRAPH::</title>
+    </h:head>
+    <h:body>
+ <center>
+            <div style="height:1100px; width: 100%; padding-left: -30px" >
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:dashboard id="board" model="#{DashboardView.model}" style="padding-left: 11px">
+                         
+                       <p:panel id="table"   style="border: 0px;font-size: 10px;margin-bottom: -60px">
+                           <p:poll interval="10" update="tb"/>
+                            <p:dataTable  value="#{viewsms.getsms()}" var="data" id="tb">
+                                <f:facet name="header">
+                                    Sms Report for Integration clients
+                                </f:facet>
+                                <p:column headerText="source add" style="width:70px " >
+                                    <h:outputText value="#{data.source_addr}" />
+                                </p:column>
+
+                                <p:column headerText="Mobile" style="width:30px ">
+                                     <h:outputText value="#{data.destination_addr}" />
+                                </p:column>
+
+                                <p:column headerText="time submitted"  style="width:100px " >
+                                    <h:outputText value="#{data.time_submitted}" />
+                                </p:column>
+                                <p:column headerText="Status"  style="width:55px " >
+                                    <h:outputText value="#{data.status2}" />
+                                </p:column>
+
+                                <p:column headerText="message">
+                                    <h:outputText value="#{data.short_message}" />
+                                </p:column>
+                            </p:dataTable> 
+                        </p:panel>  
+                        
+                        
+                        <p:panel id="table3"   style="border: 0px;font-size: 10px; margin-top: -40px;">
+                           <p:poll interval="10" update="report2"/>
+                            <p:dataTable  value="#{viewsms_dbsms.getsms2()}" var="data" id="report2">
+                                <f:facet name="header">
+                                    Sms Report for Web Clients
+                                </f:facet>
+                                <p:column headerText="source add" style="width:70px " >
+                                    <h:outputText value="#{data.source_addr}" />
+                                </p:column>
+
+                                <p:column headerText="Mobile" style="width:30px ">
+                                     <h:outputText value="#{data.destination_addr}" />
+                                </p:column>
+
+                                <p:column headerText="time submitted"  style="width:100px " >
+                                    <h:outputText value="#{data.time_submitted}" />
+                                </p:column>
+                                <p:column headerText="Status"  style="width:55px " >
+                                    <h:outputText value="#{data.status2}" />
+                                </p:column>
+
+                                <p:column headerText="message">
+                                    <h:outputText value="#{data.short_message}" />
+                                </p:column>
+                            </p:dataTable> 
+                        </p:panel>  
+                        
+                        
+                         <p:panel id="table2"   style="border: 0px;font-size: 10px;  margin-top: -50px ">
+                           <p:poll interval="10" update="tb2"/>
+                           <p:dataTable  value="#{topsms.getsms()}" var="data" id="tb2" style="margin-top: -30px">
+                                <f:facet name="header">
+                                    Sms  opt out Report  for  Integration clients
+                                </f:facet>
+                                <p:column headerText="source add" style="width:70px " >
+                                    <h:outputText value="#{data.source_addr}" />
+                                </p:column>
+
+                                <p:column headerText="Mobile" style="width:30px ">
+                                     <h:outputText value="#{data.destination_addr}" />
+                                </p:column>
+
+                                <p:column headerText="time submitted"  style="width:100px " >
+                                    <h:outputText value="#{data.time_submitted}" />
+                                </p:column>
+                                <p:column headerText="sms no"  style="width:55px " >
+                                    <h:outputText value="#{data.tsmsoutid}" />
+                                </p:column>
+
+                                <p:column headerText="message">
+                                    <h:outputText value="#{data.message}" />
+                                </p:column>
+              
+                            </p:dataTable> 
+                        </p:panel>  
+                        
+                        
+                        
+                  <p:panel id="finance"  header="Source Address Report for Integration clients" style="border: 0px;font-size: 13px; height: 500px; width:650px; margin-top:  -80px">
+                           
+                               <p:poll interval="20" update="updat2" />
+                            <p:chart type="bar" id="updat2" model="#{sourceadd.animatedModel2}"  style="width:650px; padding-left: -50px" />
+                        </p:panel>
+                        
+                        <p:panel id="finance2" header="Source Address Report for Web Clients" style="height:500px;border: 0px;font-size: 13px;width: 530px;margin-top:  -80px;padding-left:5px">
+                               <p:poll interval="20"  update="updat7" />
+                            
+                               <p:chart type="bar"  id="updat7"  model="#{source_addrdbsms.animatedModel2}" style="width:530px; height: 313px" />
+                        </p:panel> 
+                        
+                        
+                        
+                        
+                               
+                  <p:panel id="sports"  header="Sms Status Report for Integration clients" style="border: 0px;font-size: 13px; height: 500px; width:650px; margin-top:  -80px">
+                           
+                            <p:poll interval="20"  update="updat1" />
+                            <p:chart type="bar"   id="updat1" model="#{ChartView.animatedModel2}"  style="width:650px; padding-left: -50px" />
+                        </p:panel>
+                        
+                        
+                        
+                            <p:panel id="smstatus" header="Sms  status report for Web Clients" style="height:500px;border: 0px;font-size: 13px;width: 530px;margin-top:  -80px;padding-left:5px">
+                             <p:poll interval="20"  update="updat3" />
+                            
+                               <p:chart type="bar"  id="updat3" model="#{smsstatus2.animatedModel2}" style="width:530px; height: 313px" />
+                        </p:panel> 
+                        
+                        
+                          
+                       
+                    </p:dashboard>
+                </h:form>
+            </div>
+        </center>
+
+    </h:body>
+</html>

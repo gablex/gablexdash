@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+            <div style="justify-content: flex-start; display: flex;"><p >  Sms Balance : #{sessionmanager.remainigsms} </p> 
+            </div>
+            <h:form id="form" >
+                <h:outputScript library="js" name="newgroupsms.js" target="head" />
+                <p:growl id="msgs" showDetail="true" life="3000"/>
+
+                <p:selectOneMenu value="#{beanz.item}" >
+    <f:selectItem itemLabel="One"  itemValue="one" />
+    <f:selectItem   itemLabel="two" itemValue="two" />
+    <f:selectItem  itemLabel="three" itemValue="three" />
+    <p:ajax update="results" />
+</p:selectOneMenu>
+
+<h:panelGroup id="results">
+    <h:panelGroup rendered="#{beanz.item eq 'one'}">
+          <p:selectOneMenu value="#{tuseraddressbook.groupname}" >
+     <f:selectItem itemLabel="One Time" itemValue="1" />
+     <f:selectItem itemLabel="Recurrent" itemValue="2" />  
+</p:selectOneMenu> 
+    </h:panelGroup>
+    
+    <h:panelGroup rendered="#{beanz.item eq 'two'}">
+  <p:selectOneMenu value="#{tuseraddressbook.groupname}" >
+     <f:selectItem itemLabel="kevol" itemValue="1" />
+     <f:selectItem itemLabel="maina" itemValue="2" />  
+</p:selectOneMenu> 
+    </h:panelGroup>
+    
+    <h:panelGroup rendered="#{beanz.item eq 'three'}">
+        <p:outputLabel value="nuguuuuuu" />
+
+    </h:panelGroup>
+</h:panelGroup>
+ 
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html>

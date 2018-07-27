@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+ <listener>
+   <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+</listener>  
+<listener>  
+    <listener-class>
+        com.mspace1.util.factoryclose
+    </listener-class>
+</listener> 
+
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>com.mspace1.filter.loginFilter</filter-class>
+    </filter>
+ <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/user/newsms.jsf</url-pattern>
+        <url-pattern>/sms/*</url-pattern>
+        <url-pattern>/sms.jsf</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/home.jsf</location>
+</error-page>  
+<error-page>
+    <exception-type>java.lang.IndexOutOfBoundsException</exception-type>
+    <location>/home.jsf</location>
+</error-page>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>sam</param-value> 
+    </context-param>
+    <welcome-file-list>
+        <welcome-file>home.jsf</welcome-file>
+    </welcome-file-list>  
+</web-app>

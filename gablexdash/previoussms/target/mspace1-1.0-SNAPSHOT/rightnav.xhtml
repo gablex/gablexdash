@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+
+    </h:head>
+
+    <h:body>
+
+        <ui:composition>
+            <style>
+                .myNewButton {
+                    display: block;
+                    height: 20px !important;
+                    text-decoration:none;
+                    cursor: pointer;
+                    padding:1px;
+                    background-image: url('./images/tasks.gif');
+                    background-repeat: no-repeat;
+                    overflow: hidden;
+                    text-indent: 15px;
+                    width: 130px;
+                    margin-right: -15px;
+                    margin-left: -16px;
+                    /*  border: 1px solid #74b2e2;*/
+
+                }
+                .myNewButton:hover {
+                    display: block;
+                    text-decoration:none;
+                    border: 1px solid #74b2e2;
+                    background: #e4f1fb;
+                    cursor: pointer;
+                    padding: 0px;
+                    background-image: url('./images/tasks.gif');
+                    background-repeat: no-repeat;
+                    overflow: hidden;
+                    text-indent: 15px;
+                }
+                .myNewButton:active {
+                    display: block;
+                    text-decoration:none;
+                    border: 1px solid #74b2e2;
+                    background:blue;
+                    cursor: pointer;
+                    padding: 0px;
+                    background-image: url('./images/tasks.gif');
+                    background-repeat: no-repeat;
+                    overflow: hidden;
+                    text-indent: 15px;
+                }
+                
+               
+            </style>
+            <h:form>
+
+                <p>
+                    <p:commandLink  value="Dashboard" styleClass="myNewButton" action="#{userInfo.smshome()}" id="hom"  ajax="false" >
+                        <p:ajax rendered="content form" />
+                    </p:commandLink>
+                </p>
+                <p>
+                    <p:commandLink value="New Sms"  actionListener="#{tuseraddressbook.resetfornewsms()}" action="#{userInfo.newsms()}"   styleClass="myNewButton" ajax="false"  >
+                        <p:ajax  rendered="content form"  />
+                    </p:commandLink>
+                </p>
+                <p>
+                    <p:commandLink value="New Group Sms"  actionListener="#{tuseraddressbook.reset2()}"  action="#{userInfo.newsmsgroup()}"  ajax="false" styleClass="myNewButton">
+                        <p:ajax  rendered="content form"/>
+                    </p:commandLink>
+                </p> 
+                <p>
+                    <p:commandLink value="Upload Excel"   actionListener="#{Exceluploader.resetall()}"   action="#{userInfo.uploadexcel()}" ajax="false" styleClass="myNewButton">
+                        <p:ajax  rendered="content form"/>
+                    </p:commandLink>
+                </p>
+                <p>
+                    <p:commandLink value="Sms Received"   action="#{userInfo.smsreceived()}"  ajax="false" styleClass="myNewButton">
+                        <p:ajax  rendered="content form"/>
+                    </p:commandLink>
+                </p>
+                <p>
+                    <p:commandLink  value="Sent Sms"  actionListener="#{sentsms.reset()}" action="#{userInfo.sentsms()}"  ajax="false" styleClass="myNewButton">
+                        <p:ajax  rendered="content form"/>
+                    </p:commandLink>
+                </p>
+                <p>
+                    <p:commandLink value="User Profile"   action="#{userInfo.userprofile()}"  ajax="false" styleClass="myNewButton">
+                        <p:ajax    rendered="content form"/>
+                    </p:commandLink>
+                </p>
+                <p>
+                    <p:commandLink value="Address Book"     actionListener="#{taddressbook2.setnull()}" action="#{userInfo.addressbook()}"  ajax="false" styleClass="myNewButton">
+                        <p:ajax  rendered="content form"/>
+                    </p:commandLink>
+                </p>
+                <p>
+                    <p:commandLink value="Tasks"    action="#{userInfo.task()}"  ajax="false" styleClass="myNewButton"  style="visibility: hidden" >
+                        <p:ajax  rendered="content form"/>
+                    </p:commandLink>
+                </p> 
+                <p>
+                    <p:commandLink value="Email"   action="#{userInfo.email()}"  ajax="false" styleClass="myNewButton"  style="visibility: hidden"  >
+                        <p:ajax  rendered="content form"/>
+                    </p:commandLink>
+                </p>
+
+            </h:form>
+        </ui:composition>
+
+    </h:body>
+</html>
+

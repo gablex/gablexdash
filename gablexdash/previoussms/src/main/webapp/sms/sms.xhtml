@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+         xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+            <h:form id="form">
+                <div style="justify-content: center ;display: flex;">
+                     
+                    <h:outputText value="#{sessionmanager.getsessionname()}" ></h:outputText><br></br>
+                <p style="text-align: center ; padding-top: 50px">      We hope you enjoy your MSpace SMS Experience.<br></br>
+
+For any comments or queries, please do not hesitate to contact our support desk.</p>
+                    Sms  Balance :  <h:outputText value="#{sessionmanager.remainigsms}" ></h:outputText>
+                </div >
+                <div  style="justify-content: center ;display: flex;" >
+              
+        <h:panelGrid >
+
+    <p:chart type="bar" model="#{chartView.animatedModel2}" style="width:800px; height: 400px" />
+</h:panelGrid>
+            </div>
+</h:form>
+ </ui:composition>
+</h:body>
+</html> 

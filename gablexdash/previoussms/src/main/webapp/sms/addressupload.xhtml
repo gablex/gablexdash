@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+         xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+     <h:form id="form">   
+<div  style="justify-content: center ;display: flex;">
+                     
+                    <h:outputText value="#{sessionmanager.getsessionname()}" ></h:outputText><br></br>
+
+                </div>
+<div style="margin-top: 10px ;justify-content: center ;display: flex;">
+    <p> You can only upload excel files of type .xls or .xlsx <br></br> 
+        Format group name,contact name,contact number <br></br>
+        E.g. Work Mates,John Paul,0722123456 </p>
+    <h:panelGrid>      
+        <p:fileUpload fileUploadListener="#{fileuploader.handleFileUpload}"    mode="advanced" dragDropSupport="true"
+       update="messages,tbl" sizeLimit="100000000000" fileLimit="3"  allowTypes="/(\.|\/)(xls|xlsx)$/" />
+ <p:growl id="messages" showDetail="true" life="120000"/>
+    </h:panelGrid> 
+   </div>
+         <div style="justify-content: enter; display: flex;">
+     <p:dataTable id="tbl" var="address" value="#{fileuploader.mgetuploaded()}"
+                          paginator="true" rows="13" paginatorPosition="bottom">
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Group name" />
+            </f:facet>
+            <h:outputText value="#{address.groupName}" />
+        </p:column>
+ 
+        <p:column exportable="false">
+            <f:facet name="header">
+                <h:outputText value="Contact name" />
+            </f:facet>
+            <h:outputText value="#{address.contactName}" />
+        </p:column>
+         <p:column>
+            <f:facet name="header">
+                <h:outputText value="Contact number" />
+            </f:facet>
+            <h:outputText value="#{address.contactNumber}" />
+        </p:column>
+ 
+    </p:dataTable>    
+            
+           </div>
+      <div style="justify-content: enter; display: flex;">
+                 <img id="progressbar" src="./images/ajax-loader.gif" style="display:none" />
+      <p:commandButton  value="SAVE UPLOADED ADDRESS "  action="#{fileuploader.add_address()}" onclick="document.getElementById('progressbar').style.display='block'" id="contactd"  ajax="false" style="margin-left: 40%" >
+                                       <p:ajax rendered="content form" />
+                                       </p:commandButton > </div>
+     </h:form>
+ </ui:composition>
+</h:body>
+</html> 

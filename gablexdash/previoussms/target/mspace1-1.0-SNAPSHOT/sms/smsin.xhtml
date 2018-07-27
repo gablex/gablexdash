@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+         <div style="justify-content: flex-start; display: flex;"><p >  Sms Balance : #{sessionmanager.remainigsms} </p> 
+            </div>
+<!--            <div  style="justify-content:flex-start ;display: flex;">
+                    <h:outputText value="Sms Received" ></h:outputText>
+
+                </div>-->
+            <h:form id="form0">
+
+
+                <table width="60%" align="center" cellspacing="0" border="0" cellpadding="0" style="padding-top: 20px">
+                    <tr>
+                        <td width="160" align="right">Start Date:  <p:calendar id="effect" value="#{tusersmsincontroller.sdate}" required="true" requiredMessage="select start date" pattern="yyyy-MM-dd"  navigator="true" pages="1" /></td>
+                        <td width="7" align="left" ></td>
+                        <td width="160" align="right">End Date:  <p:calendar id="effect1" value="#{tusersmsincontroller.edate}" required="true"  requiredMessage="select end date"  pattern="yyyy-MM-dd"  navigator="true" pages="1" /></td>
+                        <td width="7" align="left"></td>
+                    </tr> 
+                    <tr>
+                        <td width="69"></td><td width="69" align="right">
+                                 <img id="progressbar" src="./images/ajax-loader.gif" style="display:none" />
+                            <p:commandButton  actionListener="#{tusersmsincontroller.getsmsinlist()}" onclick="document.getElementById('progressbar').style.display='block'" ajax="false" value="Submit"/>
+                        </td>
+                        <td width="69"></td><td width="69"></td>
+                    </tr>
+                </table> 
+
+                <div>
+        <p:dataTable  value="#{tusersmsincontroller.getsmsinlist()}" var="data" id="tb" widgetVar="addressTable"
+                                          paginator="true" rows="15" resizableColumns="true" filteredValue="#{tusersmsincontroller.filteredsmsin}"
+                                          paginatorPosition="bottom" 
+                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                          rowsPerPageTemplate="10,60,200">
+                                <f:facet name="header" >
+                                    <p:commandButton value="Export" ajax="false" style="height: 17px; float:right ;">
+                                        <!--                <p:graphicImage name="/demo/images/excel.png" width="24"/>-->
+                                        <p:dataExporter type="xls" target="tb" fileName="Smsin" />
+                                    </p:commandButton>
+                                    <p:outputPanel style="width:150px;" >
+                                        <h:outputText value=""/>
+                                        <p:inputText id="globalFilter" onkeyup="PF('addressTable').filter()" style="width:150px; " placeholder="Enter keyword"/>
+                                    </p:outputPanel>
+                                    Received sms report
+                                    <p:commandButton id="toggler" type="button" value="Columns" style="height: 17px; float:right ;" icon="ui-icon-calculator" />
+                                    <p:columnToggler datasource="tb" trigger="toggler" />
+                                </f:facet>
+                                <p:column headerText="Mobile" style="width:50px " sortBy="#{data.destinationAddr}" filterBy="#{data.destinationAddr}" filterStyle="display:none">
+                                    <h:outputText value="#{data.destinationAddr}" />
+                                </p:column>
+                                <p:column headerText="Short Code / Modem" style="width:50px" sortBy="#{data.source_addr}" filterBy="#{data.source_addr}" filterStyle="display:none" >
+                                    <h:outputText value="#{data.source_addr}" />
+                                </p:column>
+                                <p:column headerText="Message"  style="width:200px " sortBy="#{data.shortMessage}" filterBy="#{data.shortMessage}" filterStyle="display:none"  >
+                                    <h:outputText value="#{data.shortMessage}" />
+                                </p:column>
+                                <p:column headerText="Time Received"  style="width:50px "  sortBy="#{data.timereceived}" filterBy="#{data.timereceived}" filterStyle="display:none" >
+                                    <h:outputText value="#{data.timereceived}" />
+                                </p:column>
+
+                            </p:dataTable>  
+                       
+                </div>
+            </h:form>  
+
+        </ui:composition>
+    </h:body>
+</html>

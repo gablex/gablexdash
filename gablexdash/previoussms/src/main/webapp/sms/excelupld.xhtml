@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+            <h:form id="form">  
+               
+          
+ <div style="justify-content: flex-start; display: flex;"><p >  Sms Balance : #{sessionmanager.remainigsms} </p> 
+            </div>
+
+
+                <div style="margin-top: 10px ;justify-content: center ;display: flex;">
+                    <p> You can only upload excel files of type .xls or .xlsx <br></br> 
+                        Upload Excel with Mobile, account number, balance, etc  <br></br> </p>
+                    <h:panelGrid>      
+                        <p:fileUpload fileUploadListener="#{Exceluploader.handleFileUpload}"    mode="advanced" dragDropSupport="true"
+                                      update="messages,frm" sizeLimit="100000000000" fileLimit="3"  allowTypes="/(\.|\/)(xls|xlsx)$/" >
+
+                        </p:fileUpload>
+                        <p:growl id="messages" showDetail="true" life="120000"/>
+                        <div>
+                                   <p:outputLabel  for="frm" value="Select Excel Sheet To Use"/>
+                            <p:selectOneMenu id="frm" value="#{Exceluploader.sheetname}" required="true" requiredMessage="Upload Excel First then choose the sheet">
+                            <f:selectItem itemLabel="Select Excel Sheet"  noSelectionOption="true"/>
+                            <f:selectItems value="#{Exceluploader.shownamesheet()}" />
+                            
+                        </p:selectOneMenu>
+
+                            <img id="progressbar" src="./images/ajax-loader.gif" style="display:none" />
+                        <p:commandButton  value="Done"  action="#{Exceluploader.selectcolumn()}"  onclick="document.getElementById('progressbar').style.display='block'" id="contactd"  ajax="false" >
+                            <p:ajax rendered="content form" />
+                        </p:commandButton > 
+                        </div>
+                    </h:panelGrid> 
+
+
+
+
+
+
+                </div>
+
+
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html> 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>MSpace Task Management</title>
+        <style >
+            .truncate {
+                max-width: 160px;
+                max-height: 15px;
+
+            }
+
+            .truncate > div {
+
+
+
+
+                display: block;
+                position: absolute;
+            }
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <script>
+            function ext1()
+            {
+                // Set bar width
+
+                this.cfg.seriesDefaults.rendererOptions
+                        = {
+
+                            barWidth: 100
+
+                        };
+            }
+        </script>
+
+
+
+        <script>
+            function chartExtender1()
+            {
+
+                this.cfg.legend
+                        = {
+
+                            fontSize: '14px',
+
+                            rendererOptions :
+
+                        };
+            }
+        </script>
+        <script>
+            function chartExtender()
+            {
+                //bold gridlines
+                this.cfg.grid = {
+
+                    gridLineColor: '#303030',
+                    gridLIneWidth: 20.0
+
+
+
+                };
+            }
+            var html = document.getElementById('htmlCont');
+            var imageElement = html.getElementsByTagNameNS("image");
+
+            function removeImage(imageElement) {
+                imageElement
+            }
+        </script>
+
+        <h:form>
+            <h:panelGrid width="100%">
+                <h:form id="form">
+          <p:dataTable  style="font-size: 14px;font-family:serif;font-weight:normal" id="table" var="user" value="#{summary.users}" widgetVar="data">
+                        <f:facet name="header" >
+                            <p:outputLabel style="font-size: 14px;font-family:serif;font-weight:normal;width: 100%" value="Latest Tasks"/>
+
+                        </f:facet>
+                        <p:column headerText="Sender" style="font-size: 14px;font-family:serif;font-weight:normal;width: 12px" >
+
+                            <h:outputText value="#{user.source}"/>
+                        </p:column>
+                        <p:column headerText="Time Received" style="font-size: 14px;font-family:serif;font-weight:normal;width: 3px">
+                            <h:outputText value="#{user.dateReceived}"/>
+
+
+                        </p:column>
+                        <p:column headerText="Allocated To" style="font-size: 14px;font-family:serif;font-weight:normal;width: 1px">
+                            <h:outputText  value="#{user.allocatedTo}"/>
+                        </p:column>
+                        <p:column headerText="Status" style="font-size: 14px;font-family:serif;font-weight:normal;width: 1px" >
+                            <h:outputText  value="#{user.status}"/>
+                        </p:column>
+                        <p:column headerText="Subject" style="font-size: 14px;font-family:serif;font-weight:normal;width: 30px" >
+                            <h:outputText  value="#{user.subject}"/>
+                        </p:column>
+                        <p:column headerText="Message"  style="font-size: 14px;font-family:serif;font-weight:normal;width: 80px"  >
+                            <h:outputText  value="#{user.message}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:poll listener="#{summary.users}" update="form" interval="3000" />
+                </h:form>
+
+
+            </h:panelGrid>
+
+            <h:panelGrid width="100%" columns="2" columnClasses="left.right" >
+                <p:chart  type="bar" model="#{allEmails1.barModel}" style="width:450px:;height: 450px; ;font-size: 14px;font-family:serif;font-weight:normal; "  />
+                <p:chart type="bar" model="#{allSMS1.barModel}" style="width:100%;height: 450px; ;font-size: 14px;font-family:serif;font-weight:normal; "/> 
+            </h:panelGrid>
+
+            <h:panelGrid width="100%" columns="2" columnClasses="left.right" >
+                <p:chart type="bar" model="#{emailsToday1.barModel}" style="width:100%;height: 450px;font-size: 14px;font-family:serif;font-weight:normal; " />
+                <p:chart type="bar" model="#{sMSToday1.barModel}" style="width:100%;height: 450px;font-size: 14px;font-family:serif;font-weight:normal; "/> 
+            </h:panelGrid>
+            <h:panelGrid width="100%" columns="2" columnClasses="left.right" >
+                <p:chart type="bar" model="#{averageStaff.barModel}" style="width:100%;height: 450px; ;font-size: 14px;font-family:serif;font-weight:normal; "/>
+             
+                <p:chart type="bar" model="#{totalStaff1.barModel}" style="width:100%;height: 450px;font-size: 14px;font-family:serif;font-weight:normal;"/>
+          </h:panelGrid>
+
+            <h:panelGrid width="100%" columns="2" columnClasses="left.right">
+                <p:chart type="bar" model="#{daily.barModel}" style="width:100%;height: 450px;font-size: 14px;font-family:serif;font-weight:normal; " />
+                <p:chart type="bar" model="#{sms1.barModel}" style="width:100%;height: 450px; ;font-size: 14px;font-family:serif;font-weight:normal;"/>
+            </h:panelGrid>
+        </h:form>
+
+
+
+    </h:body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <ui:composition> 
+
+            <h:form id="form">
+                <p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+                </p:ajaxStatus>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage name="/images/ajax-loader.gif" />
+                </p:dialog>
+                <div  align="center" >    
+                    <p:dataTable var="item" value="#{tuserdaoaccess.getuserlist()}" id="usertb"  style="width: 60%; border-color: #e3f1fa ;" >
+                        <p:column>
+                            <f:facet name="header" >
+
+                                <h:outputText value="User Details" style="height: 25px" />
+
+                            </f:facet>
+
+                            <p:panelGrid>
+                                <p:row >
+                                    <p:column style="background-color:#e3f1fa ">
+                                        <h:outputText value="Item"   style="color: #307eae; font-weight: bolder"/>
+                                    </p:column  >
+                                    <p:column style="background-color:#e3f1fa"><h:outputText value="Details"   style="color: #307eae; font-weight: bolder" /></p:column>
+                                    <p:column style="background-color:#e3f1fa"><h:outputText value="Extra"  style="color: #307eae; font-weight: bolder" /></p:column>
+                                </p:row>
+                                <p:row >
+                                    <p:column colspan="1"><h:outputText value="username" /></p:column>
+                                    <p:column><h:outputText value="#{item.username}" /></p:column>
+                                    <p:column> <h:outputText value="" /> </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Password" /></p:column>
+                                    <p:column><h:outputText value="XXXXXX" /></p:column>
+                                    <p:column><p:commandButton value="Change Password" onclick="PF('dlg').show();" /></p:column></p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Start Date" /></p:column>
+                                    <p:column><h:outputText value="#{item.startDate}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="End Date" /></p:column>
+                                    <p:column><h:outputText value="#{item.endDate}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Max Daily" /></p:column>
+                                    <p:column><h:outputText value="#{item.maxDaily}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Max Weekly" /></p:column>
+                                    <p:column><h:outputText value="#{item.maxWeekly}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Max Monthly" /></p:column>
+                                    <p:column><h:outputText value="#{item.maxMonthly}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Max Total" /></p:column>
+                                    <p:column><h:outputText value="#{item.maxTotal}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <!--           <p:row>
+                                                <p:column colspan="1"><h:outputText value="Agent" /></p:column>
+                                                 <p:column><h:outputText value="" /></p:column>
+                                                <p:column><h:outputText value="" /></p:column>
+                                            </p:row>-->
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Sent Today" /></p:column>
+                                    <p:column><h:outputText value="#{item.smsCountToday}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Sent This week" /></p:column>
+                                    <p:column><h:outputText value="#{item.smsCountWeek}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Sent This Month" /></p:column>
+                                    <p:column><h:outputText value="#{item.smsCountMonth}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="1"><h:outputText value="Sent  Total" /></p:column>
+                                    <p:column><h:outputText value="#{item.smsCountTotal}" /></p:column>
+                                    <p:column><h:outputText value="" /></p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+                <!--            //dialog for password change-->
+                <p:growl id="growl" showDetail="true" life="4000" />
+
+                <p:dialog header="Change Password" widgetVar="dlg" resizable="false">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="password" value="Password:" />
+                        <p:password id="password" value="#{acccount.newpass}" required="true" match="password2"  validatorMessage="password too short or did not match" >
+                            <f:validateLength minimum="5"   />
+                        </p:password>
+                        <h:outputLabel for="password2" value=" confirm Password:" />
+                        <p:password id="password2" value="#{acccount.newpass}" required="true"  >
+                        </p:password>
+                        <f:facet name="footer">
+                            <p:commandButton value="Cancel"  onclick="PF('dlg').hide()" />
+                            <p:commandButton value="OK"  actionListener="#{acccount.changepassword}"
+                                             oncomplete="handleLoginRequest(xhr, status, args)" update="form:growl,form:usertb" />
+                        </f:facet>  
+                    </h:panelGrid>
+                </p:dialog>
+                <script type="text/javascript">
+                    function handleLoginRequest(xhr, status, args) {
+                        if (args.validationFailed || !args.loggedIn) {
+                            PF('dlg').jq.effect("shake", {times: 5}, 100);
+
+                        } else {
+                            PF('dlg').hide();
+                            $('#loginLink').fadeOut();
+                        }
+                    }
+                </script>
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html>
+<!--
+<p:confirm header="Change Password" message="Please enter your new password. At least 5 characters" icon="ui-icon-alert" />-->

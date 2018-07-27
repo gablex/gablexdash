@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<hibernate-configuration>
+  <session-factory>
+    <!-- Database connection settings -->
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://127.0.0.1:3306/dbSMS?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;autoReconnect=true</property>
+    <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+    <property name="connection.username">mysql</property>
+    <property name="connection.password">mysql123</property>
+    <property name="hibernate.c3p0.acquire_increment">1</property>
+    <property name="hibernate.c3p0.idle_test_period">1100</property>
+    <property name="hibernate.c3p0.min_size">5</property>
+    <property name="hibernate.c3p0.max_size">99</property>
+    <property name="hibernate.c3p0.max_statements">50</property>
+    <property name="hibernate.c3p0.timeout">1000</property>
+    <property name="hibernate.c3p0.privilegeSpawnedThreads">true</property>
+<property name="hibernate.c3p0.contextClassLoaderSource">library</property>
+    <!-- seconds -->
+    <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
+    <property name="hibernate.c3p0.acquireRetryDelay">250</property>
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <mapping class="com.mspace1.model.users" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.graphvalue" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Tuser" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Tuseraddressbook" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Tsmsout" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.TsmsoutComplete" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Tusersmsschedule" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.sentsmsview" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Tusersmsin" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.TallowedAlphanumerics" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Tdist" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Tinfo" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Talphanumerics" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.TexcelIntegration" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.Texcelsmstosend" file="" jar="" package="" resource=""/>
+  </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>    
+        <ui:composition> 
+ <div style="justify-content: flex-start; display: flex;"><p >  Sms Balance : #{sessionmanager.remainigsms} </p> 
+            </div>
+            <h:form id="form">  
+                <p:growl id="msgs" showDetail="true" />
+                <table width="60%" align="center" cellspacing="0" border="0" cellpadding="0" style="padding-top: 20px">
+                    <tr>
+                        <td width="160" align="right">Start Date:  <p:calendar id="effect" value="#{sentsms.sdate}" required="true" requiredMessage="select start date" pattern="yyyy-MM-dd"  navigator="true" pages="1"  style="font: 13px georgia;"/></td>
+                        <td width="7" align="left" ></td>
+                        <td width="160" align="right">End Date:  <p:calendar id="effect1" value="#{sentsms.edate}" required="true"  requiredMessage="select end date"  pattern="yyyy-MM-dd"  navigator="true" pages="1" style="font: 13px georgia;"/></td>
+                        <td width="7" align="left"></td>
+                    </tr>
+                    <tr>
+                        <td width="69"></td><td width="69" align="right">
+                            <img id="progressbar" src="./images/ajax-loader.gif" style="display:none" />
+                            <p:commandButton  action="#{sentsms.getsentsmsdetail()}" onclick="document.getElementById('progressbar').style.display = 'block'" ajax="false"   value="Submit"/>
+                        </td>
+                        <td width="69"></td><td width="69"></td>
+                    </tr>
+                </table> 
+
+
+                <p:dataTable var="data" id="userTable" value="#{sentsms.outputvalue()}"  resizableColumns="false"  widgetVar="addressTable"  
+                             rows="18"    paginator="true"   emptyMessage="No Sent Sms, Choose the duration " filteredValue="#{sentsms.filteredsms}"
+                             paginatorPosition="bottom" 
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="18,20,35,50,100" selectionMode="single"  selection="#{sentsms.sentview}" rowKey="#{data.id}"   >
+                    <f:facet name="header">
+                        <p:outputPanel  style="width:150px; "  >
+                       <p:inputText id="globalFilter" onkeyup="PF('addressTable').filter()" style="width:150px; " placeholder="Enter Search"/>
+                        </p:outputPanel>       
+                        <h:outputText value=" #{sentsms.nameExcel()}" style="visibility: hidden" />  
+                        <h:outputText value=" Total Sms Sent : #{sentsms.smssentcount}"/>  
+    
+                            <p:commandButton id="toggler" type="button" value="   "  icon="ui-icon-calculator" style="height: 17px; float:right ;"  />
+                            <p:columnToggler datasource="userTable" trigger="toggler" />
+                    </f:facet>
+                    <p:ajax event="rowSelect" listener="#{sentsms.onRowselect}" update="form:msgs" />
+                    <p:ajax event="rowUnselect" listener="#{sentsms.onRowselect}"  update="form:msgs" />
+                   
+                    
+                    
+                    
+                    <p:column  sortBy="#{data.destination_addr}" style="width:75px;" filterBy="#{data.destination_addr}" filterStyle="display:none" >
+                       <f:facet name="header">  
+                            <h:outputText value="Mobile "/>  
+                           </f:facet>
+                        <h:outputText value="#{data.destination_addr}" />
+                    </p:column>
+                    <p:column  sortBy="#{data.source_addr}" style="width:75px;" filterBy="#{data.source_addr}" filterStyle="display:none" >
+                       <f:facet name="header">  
+                            <h:outputText value="SenderID "/>  
+                           </f:facet>
+                        <h:outputText value="#{data.source_addr}" />
+                    </p:column>
+                     <p:column  sortBy="#{data.time_submitted}" style="width:115px;" filterBy="#{data.time_submitted}" filterStyle="display:none">
+                         <f:facet name="header">  
+                            <h:outputText value="Time Sent"/>  
+                           </f:facet>
+                         <h:outputText  value="#{data.time_submitted}" />
+                    </p:column>
+                    <p:column  sortBy="#{data.time_processed}" style="width:89px;" filterBy="#{data.time_processed}" filterStyle="display:none">
+                        <f:facet name="header">  
+                            <h:outputText value="Last update"/>  
+                           </f:facet>
+                        <h:outputText  value="#{data.time_processed}" />
+                    </p:column>
+                       <p:column sortBy="#{data.status}" style="width:55px;" filterBy="#{data.status}" filterStyle="display:none">
+                         <f:facet name="header">  
+                            <h:outputText value="Status"/>  
+                           </f:facet>
+                           
+                           <h:outputText  value="#{data.status}" />
+               </p:column>
+                    <p:column sortBy="#{data.user1}" style="width:50px;" filterBy="#{data.user1}" filterStyle="display:none">
+                         <f:facet name="header">  
+                            <h:outputText value="User"/>  
+                           </f:facet>
+                        
+                        <h:outputText  value="#{data.user1}" />
+                    </p:column>
+                    <p:column  sortBy="#{data.smscount}" style="width:30px;" filterBy="#{data.smscount}" filterStyle="display:none">
+                       <f:facet name="header">  
+                            <h:outputText value="No of SMS"/>  
+                           </f:facet>
+                        <h:outputText  value="#{data.smscount}" />
+                    </p:column>
+                    
+                    
+                    <p:column sortBy="#{data.message_payload}" filterBy="#{data.message_payload}" filterStyle="display:none">
+                        <f:facet name="header">  
+                            <h:outputText value="Message"/>  
+                           </f:facet>
+                        <h:outputText value="#{data.message_payload}"  />
+                    </p:column>
+                   
+                 
+                </p:dataTable>  
+                
+                <p:spacer height="30"/>  
+
+           
+                
+                
+                <!--///-->
+                  
+<p:panel header="Export PDF and Excel">  
+     <p:commandLink id="pdf1" ajax="false"  >  
+         <p:graphicImage value="/resources/images/pdf.png"/>  
+         <f:setPropertyActionListener value="false" target="#{exporterController.customExporter()}" />  
+  
+         <pe:exporter type="pdf" target="userTable" fileName="#{sentsms.nameExcel2()}"
+                        skipComponents="org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox,org.primefaces.component.spacer.Spacer,
+               org.primefaces.component.columntoggler.ColumnToggler,
+               org.primefaces.component.outputpanel.OutputPanel,
+               org.primefaces.component.commandbutton.CommandButton" />
+  
+     </p:commandLink>  
+   
+  
+     <p:spacer width="20"/>  
+  
+     <p:commandLink id="xls" ajax="false"  >  
+         <p:graphicImage value="/resources/images/excel.png"/>  
+         <f:setPropertyActionListener value="true" target="#{exporterController.customExporter()}" />  
+         <pe:exporter type="xlsx" target="userTable" fileName="#{sentsms.nameExcel2()}"  
+       skipComponents="org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox,org.primefaces.component.spacer.Spacer,
+               org.primefaces.component.columntoggler.ColumnToggler,
+               org.primefaces.component.outputpanel.OutputPanel,
+               org.primefaces.component.commandbutton.CommandButton" />
+  
+     </p:commandLink>     
+
+</p:panel>  
+            </h:form>  
+
+        </ui:composition>
+    </h:body>
+</html>

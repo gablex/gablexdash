@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head></h:head>
+    <h:body> 
+        <ui:composition> 
+
+            <h:form id="form">
+                <div  >    
+                    <p:dataTable var="data" value="#{tuseraddressbook.getsmsdetail()}"  id="tb" rows="15" paginator="true"  widgetVar="addressTable"  paginatorPosition="bottom"  
+                                 emptyMessage="No Sms Report " filteredValue="#{tuseraddressbook.filteredsms}" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,60,200">
+                        <f:facet name="header" >
+                            <p:outputPanel  style="float:start" >
+                                <h:outputText value="       "/>
+                                <p:inputText id="globalFilter" onkeyup="PF('addressTable').filter()" style="width:150px; " placeholder="Enter Search"/>
+                            </p:outputPanel>
+                            <h:outputText value="List of Sent Sms ,    Sms Balance : #{sessionmanager.remainigsms}" style="height: 25px" />
+
+                            <p:commandButton id="toggler" type="button" value="Columns" style="height: 17px; float:right ;" icon="ui-icon-calculator" />
+                            <p:columnToggler datasource="tb" trigger="toggler" />
+                        </f:facet>
+                        <p:column headerText="Destination" sortBy="#{data.destinatin}" filterBy="#{data.destinatin}" filterStyle="display:none">
+                            <h:outputText value="#{data.destinatin}" />
+                        </p:column>
+
+                        <p:column headerText="Sent Status" filterBy="#{data.smsstatuz}" filterStyle="display:none">
+                            <h:outputText value="#{data.smsstatuz}" />
+                        </p:column>
+
+                    </p:dataTable>
+ </div>
+                
+
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html>

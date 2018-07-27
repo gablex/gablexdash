@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+         xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+  
+       <h:body>
+	<ui:composition>
+            <h:form>
+<p>right nav</p>
+<p>
+<h:commandLink value="home" action="#{userInfo.backToLandingPage}" id="next0">
+<f:ajax render="content form" />
+</h:commandLink>
+</p>
+<p>
+<h:commandLink value="Birthday" action="#{userInfo.captureUsername}" id="next1">
+<f:ajax render="content form" />
+</h:commandLink>
+</p>
+  <p> 
+  <h:commandLink value="thank you" action="#{userInfo.captureBirthday}" id="next2">
+<f:ajax render="content form" />
+  </h:commandLink>
+   </p>
+ <p>
+ <h:commandLink value="back  home" action="#{userInfo.backToLandingPage}"    id="again">               
+   <f:ajax render="content form" />         
+ </h:commandLink>
+ </p>
+ </h:form>
+</ui:composition>
+
+    </h:body>
+</html>
+

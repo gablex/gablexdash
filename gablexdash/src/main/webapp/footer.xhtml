@@ -1,0 +1,77 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mspace1.util;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+public class HibernateUtil {
+
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+
+    private static SessionFactory buildSessionFactory() {
+        try {
+            // Create the SessionFactory from hibernate.cfg.xml
+            StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+            Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
+            return metadata.getSessionFactoryBuilder().build();
+        } catch (Throwable ex) {
+            // Make sure you log the exception, as it might be swallowed
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  <session-factory>
+   <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dbSMS?useSSL=false</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">mysql123M?</property>
+  <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+     <property name="show_sql">true</property>
+      <mapping class="com.mspace1.model.Tuser" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.users" file="" jar="" package="" resource=""/>
+    <mapping class="com.mspace1.model.smscondition"/>
+    <mapping class="com.mspace1.model.graphvalue" file="" jar="" package="" resource=""/>
+  </session-factory>
+</hibernate-configuration>

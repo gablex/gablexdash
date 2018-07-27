@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body> 
+        <ui:composition> 
+            <h:form id="form">  
+                <div style="justify-content: flex-start; display: flex;"><p >  Sms Balance : #{sessionmanager.remainigsms} </p> 
+                </div>
+
+                <p:growl id="msgs" showDetail="true" />
+                <div>
+                   
+                    <p:commandButton value="add" onclick="document.getElementById('progressbar').style.display = 'block'" actionListener="#{taddressbook2.setnull3()}" action="#{userInfo.addnos()}"  id="addno"  ajax="false">
+                        <p:ajax rendered="content form" />
+                    </p:commandButton>
+                    <p:commandButton value="Upload"  onclick="document.getElementById('progressbar').style.display = 'block'" actionListener="#{fileuploader.reset()}" action="#{userInfo.upload_addressExcel()}"  id="upload"  ajax="false">
+                        <p:ajax rendered="content form" />
+                    </p:commandButton>
+                </div>
+                <div> 
+                     
+                    <p:dataTable var="data" id="userTable" value="#{taddressbook2.retngrpcntlist()}"  resizableColumns="true"  widgetVar="addressTable"  
+                                 rows="18"    paginator="true"   emptyMessage="No Address group found"
+                                 paginatorPosition="bottom" 
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="18,20,35,50,100"    >
+                        <f:facet name="header">
+                            <p:commandButton value="Export" ajax="false"  style="height: 17px; float:right ;">
+                                <p:dataExporter type="xlsx" target="userTable" fileName="Group_address" />
+                            </p:commandButton>                                             
+                            <p:outputLabel value="Group Contacts" />
+                            <p:commandButton id="toggler" type="button" value="Columns" style="height: 17px; float:right ;"  icon="ui-icon-calculator" />
+                            <p:columnToggler datasource="userTable" trigger="toggler" />
+                        </f:facet>
+                        <p:column headerText=" Group " sortBy="#{data.grpnamez}"  >
+                            <h:outputText value="#{data.grpnamez}" />
+                        </p:column>
+                        <p:column headerText="No. of contacts" sortBy="#{data.group_count}" >
+                            <h:outputText value="#{data.group_count}"  />
+                        </p:column>
+
+                        <p:column   exportable="false">
+                            <f:facet name="header">View</f:facet>
+                          <p:commandButton value="View"   action="#{taddressbook2.viewContactBygroup(data)}" update="form:userTable">
+                            </p:commandButton>
+                        </p:column>
+                        <p:column  exportable="false">
+                            <f:facet name="header">Delete</f:facet>
+                            <p:commandButton value="Delete"   action="#{taddressbook2.deleteselectedgroup(data)}"  update="form:userTable">
+                                <p:confirm header="Delete this address" message="Are you sure?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>    
+                </div>
+
+
+
+
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>
+
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html>

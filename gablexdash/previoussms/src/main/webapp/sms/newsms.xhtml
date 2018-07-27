@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <a href="newsms.xhtml"></a>
+    <h:body>
+        <ui:composition> 
+            <div >
+                <p>  Sms Balance : #{sessionmanager.remainigsms} </p> 
+            </div>
+
+            <div align="center">
+                <h:form id="form" >
+                    <h:outputScript library="js" name="common.js" target="head" />
+
+                     <p:growl id="messages" showDetail="true" life="120000"/>
+                    <table style="height: 500px">
+                        <tr >
+                            <td>
+                            </td>
+                            <td > 
+
+                                <script>
+                                    today = Date();
+                                </script>  
+                                <table style="height: 400px; margin-top: -30px">
+                                    <tr>
+                                        <td>
+                                            <p> Groups</p>
+
+                                            <p:selectOneMenu value="#{beanz.item}" >
+                                                <f:selectItem itemLabel="Select One"  itemValue="" />
+                                                <f:selectItem itemLabel="Groups" itemValue="Groups" />
+                                                <f:selectItem itemLabel="Contacts" itemValue="Contacts" />
+                                                <p:ajax update="shower" />
+                                            </p:selectOneMenu>
+                                        </td>
+                                        <td>
+                                            <p> Names </p>
+                                            <h:panelGrid id="shower" >   
+                                                 <h:panelGroup rendered="#{beanz.item eq ''}" >   
+                                                    <p:selectOneMenu id="advanced0" widgetVar="selectWVr"   
+                                                                       effect="fade"   >             
+                                                        <f:selectItem itemLabel="Select One" noSelectionOption="true" />                                                    
+                                                    </p:selectOneMenu>  
+                                                </h:panelGroup>
+                                                
+                                                
+                                                <h:panelGroup rendered="#{beanz.item eq 'Contacts'}"  style="width:50px" >   
+                                                    <p:selectOneMenu id="advanced1" value="#{tuseraddressbook.contactbnz}"   widgetVar="selectWV"   converter="contactname_numberconverter"
+                                                                     onchange="loadcontact()"    effect="fade" var="t"  style="width:50px" >             
+                                                        <f:selectItem itemLabel="Select One" noSelectionOption="true" />
+                                                        <f:selectItems value="#{tuseraddressbook.grp_contacss}" var="themea" itemLabel="#{themea.contactname}" itemValue="#{themea}" /> 
+                                                        <p:column style="width:10px ; border: none" >
+                                                            <h:outputText value="#{t.contactname}" />
+                                                        </p:column> 
+                                                         
+                                                    </p:selectOneMenu>  
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{beanz.item eq 'Groups'}" >
+                                                    <p:selectOneMenu id="advanced" value="#{tuseraddressbook.groupsbeannumbersz}" widgetVar="selectWV2"  converter="groupnumberconverter"
+                                                                     onchange="loadgroup()"   effect="fade" var="t" style="width:80px"  filter="true" filterMatchMode="startsWith"     >             
+                                                        <f:selectItem itemLabel="Select One"  itemValue=""    noSelectionOption="true"       />
+                                                        <f:selectItems value="#{tuseraddressbook.grp_numbercntnwsms}" var="theme" itemLabel="#{theme.group_name}" itemValue="#{theme}" /> 
+                                                        <p:column  style="border: none; width: 10px">
+                                                            <h:outputText value="#{t.group_name}" />
+                                                        </p:column> 
+                                                        <p:column  style="border: none ; ">
+                                                            <h:outputText value="( #{t.groupname_count} Contacts)" />
+                                                        </p:column>                                          
+                                                    </p:selectOneMenu>
+                                                </h:panelGroup>
+
+                                            </h:panelGrid>
+                                        </td> 
+                                    </tr>                    <tr >
+                                        <td style="margin-left: 20px">
+                                            <p>To:</p>
+                                            <p:inputTextarea  id="tor" value="#{tuseraddressbook.listno}"  widgetVar="youtlink"     rows="13" cols="15" required="true" autoResize="false" >
+                                                <p:keyFilter regEx="/[\d\+]/" preventPaste="false" />                                        
+                                            </p:inputTextarea >
+<!--                                       <pe:tooltip for="tor" value="Enter /select  contacts to send a message to" showEffect="slideToggle"  
+                                    hideEffect="slideToggle" showDelay="0" myPosition="left center" atPosition="right center"/>  -->
+                                            
+                                            <br></br>
+                                            <h5> </h5>
+                                        </td>
+                                        <td >
+                                            <p> Message: </p>
+                                            <h:inputHidden  id="mumLen" value='160'/>
+                                            <p:inputTextarea value="#{tuseraddressbook.message}" rows="13" cols="35" id="message"   onkeyup="textCounter()">
+                                            </p:inputTextarea>
+<!--                                              <pe:tooltip for="message" value="Enter a message to send " showEffect="slideToggle"  
+                                        hideEffect="slideToggle" showDelay="0" myPosition="left center" atPosition="right center"/> -->
+                                            <br></br>
+                                            <h:outputLabel for="remLen" value="Characters left:" />
+                                            <h:inputText  id="remLen" value="" size="9" maxlength="8" readonly="true" />
+                
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left: 170px"><p>From:</p></td>
+                                        <td style="padding-bottom: 0px">
+                                            <p:selectOneMenu id="frm" value="#{tuseraddressbook.from}" required="true"   requiredMessage="kindly choose source address">
+                                                <f:selectItem itemLabel="Select One" itemValue=""  noSelectionOption="true"/>
+                                                <f:selectItems value="#{senderaddressource.getuserlist2()}" />
+                                            </p:selectOneMenu>
+                                           
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left: 110px ;"><p>Time to send:</p>
+                                        </td>
+                                        <td> <p:calendar id="datetime" value="#{tuseraddressbook.time}" pattern="yyyy-MM-dd HH:mm:ss" mindate="#{tuseraddressbook.todayDate}" style="font: 13px georgia;" /> 
+<!--  <pe:tooltip for="datetime" value="Select time to send the message   " showEffect="slideToggle"  
+                                    hideEffect="slideToggle" showDelay="0" myPosition="left center" atPosition="right center"/> -->
+                                        </td>
+
+                                    </tr>                               
+                                    <tr>
+                                        <td></td>
+                                        <td>  
+
+                                            <img id="progressbar" src="./images/ajax-loader.gif" style="display:none" />
+                                            <p:commandButton  value="Send "  action="#{tuseraddressbook.sendnewsms()}" onclick="document.getElementById('progressbar').style.display = 'block'"  id="contactd"  ajax="false" >
+                                                <p:ajax rendered="content form" />
+                                            </p:commandButton> 
+
+                                        </td> 
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p:dialog header="Insufficient Sms Balance " id="myDialogID" widgetVar="myDialogVar"  modal="true">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p> Your SMS balance #{sessionmanager.remainigsms} is not enough to <br></br>
+                                send these #{tuseraddressbook.noofsms} SMS. <br></br>
+                                Would you like to proceed and send only #{sessionmanager.remainigsms}  SMS?  </p>
+                            <f:facet name="footer">
+                                <p:commandButton value="Cancel"  onclick="PF('dlg').hide()" ajax="false"   />                                 
+                                <p:commandButton value="OK"  actionListener="#{tuseraddressbook.sendnewsms2()}"
+                                                 onclick="PF('dlg').hide()"  ajax="false"   />
+                            </f:facet>  
+                        </h:panelGrid>
+                    </p:dialog> 
+                </h:form>
+            </div>
+        </ui:composition>
+    </h:body>
+</html>

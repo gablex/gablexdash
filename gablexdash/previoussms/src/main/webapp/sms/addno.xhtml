@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition> 
+            <p:growl id="msgs" showDetail="true" life="3000"/>
+            
+            <p  style="text-align: center" >New Contact!</p>
+            <h:form>
+                <table align="center">
+                    <tr><td style="width: 200px"><h:outputLabel for="grpname" value="Group Name" /></td>
+                        <td><p:inputText id="grpname" value="#{tuseraddressbook.grpname}" required="true" placeholder="Default"  validatorMessage="Enter Group name" >
+                                <f:validateLength minimum="3" />
+                            </p:inputText></td><td>
+                            <p:selectOneMenu id="names" value="#{tuseraddressbook.selectedgrp2}">
+                                <f:selectItem itemLabel="Default" itemValue="Default" />
+                                <f:selectItems value="#{tuseraddressbook.listagroups}" />
+                                <p:ajax listener="#{tuseraddressbook.selectedaddr()}" update="grpname" />
+                            </p:selectOneMenu>  
+                        </td>
+                    </tr><tr><td> <h:outputLabel for="contactname" value="Contact Name" /></td>
+                        <td><p:inputText id="contactname" value="#{tuseraddressbook.contactname}" required="true"   validatorMessage="Enter contact name" >
+                                <f:validateLength minimum="3"   />
+                                      <p:keyFilter preventPaste="false" />
+                            </p:inputText></td><td></td></tr><tr>
+                        <td> <h:outputLabel for="contactno" value="Contact number" /></td>
+                        <td><p:inputText id="contactno" value="#{tuseraddressbook.number}" required="true"  maxlength="13"  validatorMessage="Check  Contact number length" >
+                                <f:validateLength minimum="10"   />
+                                <p:keyFilter regEx="/[\d\+]/"  preventPaste="false" />
+                            </p:inputText> </td><td>E.G 0722123456 or +254722123456</td></tr>
+                    <tr>   <td></td>
+                        <td>
+                            <img id="progressbar" src="./images/ajax-loader.gif" style="display:none" />
+                            <p:commandButton  value="Add"  action="#{tuseraddressbook.savecontact()}" onclick="document.getElementById('progressbar').style.display = 'block'"   id="contactd"  ajax="false" update="form:msgs" >
+                                <p:ajax rendered="content form" />
+                            </p:commandButton >
+
+                        </td>
+                        <td>
+                            <p:commandButton value="Reset"  action="#{tuseraddressbook.resetvalue()}" update="contactno,contactname" />
+                        </td>
+
+                    </tr>
+                </table>
+
+            </h:form>
+
+        </ui:composition>
+    </h:body>
+</html> 

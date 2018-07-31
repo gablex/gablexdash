@@ -34,12 +34,9 @@ public class ChartView implements Serializable {
 
     private BarChartModel animatedModel2;  
 
- //private static final String dbUserName = "dlr";
- private static final String dbUserName = "mysql";
-    //private static final String dbPassword = "dlr123";
- private static final String dbPassword = "mysql123";
-    //private static final String dbServer = "jdbc:mysql://10.240.181.14:3306/dbSMPPGateway?useSSL=false";
-    private static final String dbServer = "jdbc:mysql://192.168.1.51:3306/dbSMPPGateway?useSSL=false";
+ private static final String dbUserName = "user";
+ private static final String dbPassword = "passwd";
+    private static final String dbServer = "jdbc:mysql://Server:3306/dbSMPPGateway?useSSL=false";
     private static final String dbDriver = "com.mysql.jdbc.Driver";
     Connection con = null;
     ResultSet result = null;

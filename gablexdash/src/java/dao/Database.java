@@ -10,8 +10,8 @@ public class Database {
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/dbTASK",
-                    "mysql", "mysql123");
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/database",
+                    "user", "passwd");
             return con;
         } catch (ClassNotFoundException ex) {
             System.out.println("Database.getConnection() Error -->" + ex.getMessage());
@@ -24,8 +24,8 @@ public class Database {
         public static Connection getConnection1() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/dbSMS",
-                    "mysql", "mysql123");
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/database",
+                    "user", "passwd");
             return con;
         } catch (ClassNotFoundException ex) {
             System.out.println("Database.getConnection() Error -->" + ex.getMessage());
